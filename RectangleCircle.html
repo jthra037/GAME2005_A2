@@ -8,18 +8,22 @@
 <body>
 <!-- Here put your pseudocode as a nicely formatted html text -->
 <script>
-Your Javascript code must go here
+	var c = new Circle(new Point(0,0),1);
+	var r = new Rectangle(new Point(-5,5),new Point(5,5));
+	var v = new vec2d(0,1);
+	var t =  rectangleCircleCollisionTime(c,r,v);
+	
+	document.write(t); <!-- Expected result is 4 -->
+	
+	var v = new vec2d(1,-1);
+	var t =  rectangleCircleCollisionTime(c,r,v);
+	
+	document.write(t); <!-- Expected result is Infinity -->
+	
+	var v = new vec2d(1,-1);
+	var t =  rectangleCircleCollisionTime(new Circle(new Point(0,0),5),r,v);
+	
+	document.write(t); <!-- Expected result is 0 -->
 </script>
-var c = new Circle(new Point(0,0),1);
-var r = new Rectangle(new Point(-5,5),new Point(5,5));
-var v = new vec2d(0,1);
-var t =  rectangleCircleCollisionTime(c,r,v);
-document.write(t); <!-- Expected result is 4 -->
-var v = new vec2d(1,-1);
-var t =  rectangleCircleCollisionTime(c,r,v);
-document.write(t); <!-- Expected result is Infinity -->
-var v = new vec2d(1,-1);
-var t =  rectangleCircleCollisionTime(new Circle(new Point(0,0),5),r,v);
-document.write(t); <!-- Expected result is 0 -->
 </body>
 </html>
