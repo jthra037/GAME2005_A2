@@ -9,7 +9,36 @@
 <!-- Here put your pseudocode as a nicely formatted html text -->
 <h1> Pseudocode </h1>
 <ul>
-<li></li>
+<li>Determine all 4 vertices of rectangle</li>
+<ul>
+<li>We have 2 points (A,B) and (C,D) which we know are along the rectangles diagonal.</li>
+<li>This means the other two points are (A,D) and (C,B). Store those.</li>
+</ul>
+<li>Using vertices determine if there will BE a collision</li>
+<ul>
+<li>Find the closest vertice to circles origin</li>
+<li>Using this shared vertice and the 2 adjoining vertices we construct 2 "walls"</li>
+<li>Find normal n for each</li>
+<li>Find a which is wal.startPoint - cir.pos for each</li>
+<li>Find c which is dotProduct(a, n)</li>
+<li>if abs(c) &lt cir.radius then we are already colliding</li>
+<li>if nearest vertice is moving away from circle, there will be no collision</li>
+<li>Find v which is dotProduct(displacement, n)</li>
+<li>if v > 0 there will be no collision</li>
+</ul>
+<li>Check collisions with relevant line segments using circleWallCollision</li>
+<ul>
+<li>calculate the vector equation</li>
+<li>use "intersectionTime" from the textbook</li>
+<li>if that returns t which is &gt 1 no collision(?)</li>
+<li>otherwise return t</li>
+</ul>
+<li>If that somehow didn't work, check collisions with the vertices using circlePointCollision</li>
+<ul>
+<li>use pointCircleCollision</li>
+</ul>
+<li>We should have collision time in the console at this point.</li>
+</ul>
 <script>
 	function rectangleCircleCollisionTime(c, r, v)
 	{
