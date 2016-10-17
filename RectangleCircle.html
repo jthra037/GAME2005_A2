@@ -28,25 +28,34 @@
 </ul>
 <li>Check collisions with relevant line segments using circleWallCollision</li>
 <ul>
-<li>calculate the vector equation</li>
-<li>use "intersectionTime" from the textbook</li>
-<li>if that returns t which is &gt 1 no collision(?)</li>
-<li>otherwise return t</li>
+<li>Calculate the vector equation</li>
+<li>Find intersection time</li>
+<li>Return t</li>
 </ul>
 <li>If that somehow didn't work, check collisions with the vertices using circlePointCollision</li>
 <ul>
-<li>use pointCircleCollision</li>
+<li>Use pointCircleCollision</li>
 </ul>
 <li>We should have collision time in the console at this point.</li>
 </ul>
 <script>
 	function rectangleCircleCollisionTime(c, r, v)
 	{
-		console.log("This is a placeholder until I get to it.");
+		console.log("Circle O = (" + c.center.x + ", " + c.center.y + ")");
+		
+		console.log("Points for rectangle, clockwise from top left: ");
+		var p = r.center.addVec(r.u.add(r.v));
+		console.log(p.x + ", " + p.y);
+		p = r.center.addVec(r.u.add(r.v.mul(-1)));
+		console.log(p.x + ", " + p.y);
+		p = r.center.addVec(r.u.add(r.v).mul(-1));
+		console.log(p.x + ", " + p.y);
+		p = r.center.addVec(r.u.add(r.v.mul(-1)).mul(-1));
+		console.log(p.x + ", " + p.y);
 	}
 
 	var c = new Circle(new Point(0,0),1);
-	var r = new Rectangle(new Point(-5,5),new Point(5,5));
+	var r = new Rectangle(new Point(0,5),new vec2d(5, 0), new vec2d(0, 0));
 	var v = new vec2d(0,1);
 	var t =  rectangleCircleCollisionTime(c,r,v);
 	

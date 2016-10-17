@@ -15,6 +15,10 @@ function Point(x,y) {
 		var yd = this.y - otherPt.y;
 		return Math.sqrt(xd*xd+yd*yd);
 	}
+	this.addVec = function(vec)  // my own little addition to this code
+	{
+		return new Point(this.x + vec.x, this.y + vec.y); // makes it easier to find points
+	}
 }
 
 function Vec(tail,head) {
@@ -37,8 +41,10 @@ function Line(point, dirVec) {
 	this.dirVec = dirVec.unit();	
 }
 
-function Rectangle(point1, point2) {
-	// point1, point2 are ppoints on opposite ends of diagonal
-	this.point1 = point1;
-	this.point2 = point2;
+function Rectangle(center, u, v) {
+	// center: a point that is thegeometrical center of the rectangle
+	// u,v: vectors parallel to the sides with magnitude 1/2 of each side
+	this.center = center;
+	this.u = u;
+	this.v = v;
 }
