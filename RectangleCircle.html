@@ -41,21 +41,36 @@
 <script>
 	function rectangleCircleCollisionTime(c, r, v)
 	{
-		console.log("Circle O = (" + c.center.x + ", " + c.center.y + ")");
+		var A = r.center.addVec(r.u.add(r.v)); // Top right
+		A.tag = "A";
+		var B = r.center.addVec(r.u.add(r.v.mul(-1))); // Bottom right
+		B.tag = "B";
+		var C = r.center.addVec(r.u.add(r.v).mul(-1)); // Bottom left
+		C.tag = "C";
+		var D = r.center.addVec(r.u.add(r.v.mul(-1)).mul(-1)); // Top left
+		D.tag = "D";
+		var recPoints = [A, B, C, D];
 		
-		console.log("Points for rectangle, clockwise from top left: ");
-		var p = r.center.addVec(r.u.add(r.v));
-		console.log(p.x + ", " + p.y);
-		p = r.center.addVec(r.u.add(r.v.mul(-1)));
-		console.log(p.x + ", " + p.y);
-		p = r.center.addVec(r.u.add(r.v).mul(-1));
-		console.log(p.x + ", " + p.y);
-		p = r.center.addVec(r.u.add(r.v.mul(-1)).mul(-1));
-		console.log(p.x + ", " + p.y);
+		var farthest = {};
+		farthest.dist = c.center.dist(A);
+		farthest.point = A;
+		
+		for (var i = 1; i < 4; ++i)
+		{
+			var thisDist = c.center.dist(recPoints[i]);
+			if (thisDist < farthest.dist)
+			{
+				farthest.dist = thisDist;
+				farthest.point = recPoints[i];
+			}
+			console.log(farthest.point.tag);
+			console.log(farthest.dist);
+			
+		}
 	}
 
 	var c = new Circle(new Point(0,0),1);
-	var r = new Rectangle(new Point(0,5),new vec2d(5, 0), new vec2d(0, 0));
+	var r = new Rectangle(new Point(0,5),new vec2d(5, 0), new vec2d(0, 3));
 	var v = new vec2d(0,1);
 	var t =  rectangleCircleCollisionTime(c,r,v);
 	
