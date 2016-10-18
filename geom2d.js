@@ -15,9 +15,15 @@ function Point(x,y) {
 		var yd = this.y - otherPt.y;
 		return Math.sqrt(xd*xd+yd*yd);
 	}
-	this.addVec = function(vec)  // my own little addition to this code
+	
+	this.add = function(other)  // my own little addition to this code
 	{
-		return new Point(this.x + vec.x, this.y + vec.y); // makes it easier to find points
+		return new Point(this.x + other.x, this.y + other.y);
+	}
+	
+	this.subtract = function (other)
+	{
+		return new Point (this.x - other.x, this.y - other.y);
 	}
 }
 

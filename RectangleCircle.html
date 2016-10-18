@@ -39,35 +39,49 @@
 <li>We should have collision time in the console at this point.</li>
 </ul>
 <script>
-	function rectangleCircleCollisionTime(c, r, v)
+	function findClosest (recPoints)
 	{
-		var A = r.center.addVec(r.u.add(r.v)); // Top right
-		A.tag = "A";
-		var B = r.center.addVec(r.u.add(r.v.mul(-1))); // Bottom right
-		B.tag = "B";
-		var C = r.center.addVec(r.u.add(r.v).mul(-1)); // Bottom left
-		C.tag = "C";
-		var D = r.center.addVec(r.u.add(r.v.mul(-1)).mul(-1)); // Top left
-		D.tag = "D";
-		var recPoints = [A, B, C, D];
-		
-		var farthest = {};
-		farthest.dist = c.center.dist(A);
-		farthest.point = A;
+		var closest = {};
+		closest.dist = c.center.dist(A);
+		closest.point = A;
 		
 		for (var i = 1; i < 4; ++i)
 		{
 			var thisDist = c.center.dist(recPoints[i]);
-			if (thisDist < farthest.dist)
+			if (thisDist < closest.dist)
 			{
-				farthest.dist = thisDist;
-				farthest.point = recPoints[i];
+				closest.dist = thisDist;
+				closest.point = recPoints[i];
 			}
-			console.log(farthest.point.tag);
-			console.log(farthest.dist);
-			
 		}
+		
+		return closest;
 	}
+
+	function rectangleCircleCollisionTime(c, r, v)
+	{
+		var A = r.center.add(r.u.add(r.v)); // Top right
+		A.tag = "A";
+		var B = r.center.add(r.u.add(r.v.mul(-1))); // Bottom right
+		B.tag = "B";
+		var C = r.center.add(r.u.add(r.v).mul(-1)); // Bottom left
+		C.tag = "C";
+		var D = r.center.add(r.u.add(r.v.mul(-1)).mul(-1)); // Top left
+		D.tag = "D";
+		var recPoints = [D, C, B, A];
+		//var closest = findClosest(recPoints); // find the closest 
+	
+		for (var i = 0; i < 4; ++i)
+		{
+			var thisSegment = new Line(recPoints[i],new Vec(recPoints[i], recPoints[(i + 1) % 4]));
+			circleWallCollision(c, thisSegment, v);
+		}
+	
+		// Normal to the wall
+		// Circle approaching this wall
+		// Calc vector equation
+		// Intersection time
+		}
 
 	var c = new Circle(new Point(0,0),1);
 	var r = new Rectangle(new Point(0,5),new vec2d(5, 0), new vec2d(0, 3));

@@ -35,11 +35,36 @@ function particleToLine(p,v,line) {
 		return comat.det()/dmat;
 }
 
-function circleWallCollision(circle, wall) {
-	//
-	// Circle is given via center point and radius
-	// Wall is given as a straight line
-	//
+function circleWallCollision(circle, wall, vel) {
+	var n = wall.dirVec.perp();
+	var a = Vec(circle.center, wall.point);
+	var c = dotprod(a, n);
 	
+	if (Math.abs(c) < circle.radius)
+	{
+		return "embedded";
+	}
 	
+	var v = dotprod(vel, n);
+	if (v > 0)
+	{
+		return "none";
+	}
+	
+	var r;
+	if (c < 0)
+	{
+		r = n.mul(circle.radius);
+	} else
+	{
+		r = n.mul(-1 * circle.radius);
+	}
+	
+	var p = circle.center.add(r);
+	console.log(n);
+	console.log(a);
+	console.log(c);
+	console.log(v);
+	console.log(r);
+	console.log(p);
 }
