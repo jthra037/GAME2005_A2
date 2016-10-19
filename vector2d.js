@@ -25,7 +25,7 @@ function vec2d(x,y) {
 	
 	this.perp = function() {
 		// we ask that the pair (vec,perp) is right-handed pair
-		return new vec2d(-this.unit.y,this.unit.x);
+		return new vec2d(-this.unit().y,this.unit().x);
 	}
 }
 

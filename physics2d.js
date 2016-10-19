@@ -39,32 +39,46 @@ function circleWallCollision(circle, wall, vel) {
 	var n = wall.dirVec.perp();
 	var a = Vec(circle.center, wall.point);
 	var c = dotprod(a, n);
-	
-	if (Math.abs(c) < circle.radius)
-	{
-		return "embedded";
-	}
-	
 	var v = dotprod(vel, n);
-	if (v > 0)
-	{
-		return "none";
-	}
+	
+	if (isNaN(c))
+		return -1;
+	
+	if (Math.abs(c) <= circle.radius)
+		return 0;
+	
+	if (v >= 0)
+		return -1;
 	
 	var r;
 	if (c < 0)
-	{
-		r = n.mul(circle.radius);
-	} else
-	{
-		r = n.mul(-1 * circle.radius);
-	}
+		r = n.mul(-circle.radius);
+	else
+		return -1
 	
 	var p = circle.center.add(r);
-	console.log(n);
-	console.log(a);
-	console.log(c);
-	console.log(v);
-	console.log(r);
-	console.log(p);
+	
+	t = intersectionTime(p, vel, wall.point, wall.dirVec);
+	//t = particleToLine(p, vel, wall);
+	
+	return t;
+}
+
+function intersectionTime(p1, v1, p2, v2)
+{
+    var tc1 = v1.x;
+    var tc2 = v1.y;
+    var sc1 = v2.x;
+    var sc2 = v2.y;
+    var con1 = p2.x - p1.x;
+    var con2 = p2.y - p1.y;
+    var det = (tc2*sc1 - tc1*sc2);
+    if (det == 0)
+		return -1;
+	else
+    {
+        var con = (sc1*con2 - sc2*con1);
+        var t = con/det;
+        return t;
+    }
 }

@@ -39,25 +39,6 @@
 <li>We should have collision time in the console at this point.</li>
 </ul>
 <script>
-	function findClosest (recPoints)
-	{
-		var closest = {};
-		closest.dist = c.center.dist(A);
-		closest.point = A;
-		
-		for (var i = 1; i < 4; ++i)
-		{
-			var thisDist = c.center.dist(recPoints[i]);
-			if (thisDist < closest.dist)
-			{
-				closest.dist = thisDist;
-				closest.point = recPoints[i];
-			}
-		}
-		
-		return closest;
-	}
-
 	function rectangleCircleCollisionTime(c, r, v)
 	{
 		var A = r.center.add(r.u.add(r.v)); // Top right
@@ -68,23 +49,29 @@
 		C.tag = "C";
 		var D = r.center.add(r.u.add(r.v.mul(-1)).mul(-1)); // Top left
 		D.tag = "D";
-		var recPoints = [D, C, B, A];
+		var recPoints = [A, B, C, D];
 		//var closest = findClosest(recPoints); // find the closest 
-	
+
+		var t = -1;
+		
 		for (var i = 0; i < 4; ++i)
 		{
 			var thisSegment = new Line(recPoints[i],new Vec(recPoints[i], recPoints[(i + 1) % 4]));
-			circleWallCollision(c, thisSegment, v);
-		}
-	
-		// Normal to the wall
-		// Circle approaching this wall
-		// Calc vector equation
-		// Intersection time
+			if (t <= 0)
+			{
+				var thisTime = circleWallCollision(c, thisSegment, v);
+				if (thisTime > t)
+					t = thisTime;
+			}
+			else
+				return t;
 		}
 
+		return t;
+	}
+
 	var c = new Circle(new Point(0,0),1);
-	var r = new Rectangle(new Point(0,5),new vec2d(5, 0), new vec2d(0, 3));
+	var r = new Rectangle(new Point(6.5,5),new vec2d(5, 0), new vec2d(0, 0));
 	var v = new vec2d(0,1);
 	var t =  rectangleCircleCollisionTime(c,r,v);
 	
