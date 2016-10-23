@@ -19,7 +19,7 @@ function particleToLine(p,v,line) {
 	
 	vComp = dotprod(v,perp);
 	if(vComp >= Number.MIN_VALUE) 
-		return Number.POSITIVE_INFINITY;
+		return -1; // MAKES SURE IT CHECKS ALL THE SIDES AND DOESN'T STOP PREMATURELY
 	
 	var mat = new mat2d(v.x,-line.dirVec.x,v.y,-line.dirVec.y);
 	var dmat = mat.det();
@@ -50,15 +50,15 @@ function circleWallCollision(circle, wall, velocity) {
 		var centerToWall = Vec(circle.center, wall.point); // vector tail=center, head=wall
 		var wallNormal = wall.dirVec.perp();
 		var proj = dotprod(centerToWall, wallNormal);
-		if(Math.abs(proj) <= circle.radius)
-		   return 0; // circle already collided
+		if(Math.abs(proj) <= circle.radius) // CHANGED FROM < to <=
+		   return 0; // circle already collided CHANGED FROM MIN_VALUE TO 0
 		var r = wallNormal.mul(circle.radius);
 		//
 		// check if circle is approaching
 		//
 		var approach = dotprod(r,velocity);
 		if (approach > Number.MIN_VALUE)
-		   return Number.POSITIVE_INFINITY; // circle is moving away
+		   return -1; // circle is moving away
 		//
 		// compute time
 		//
@@ -80,8 +80,8 @@ function circleWallCollision(circle, wall, velocity) {
 		var centerToWall = Vec(circle.center, wall.point); // vector tail=center, head=wall
 		var wallNormal = wall.dirVec.perp();
 		var proj = dotprod(centerToWall, wallNormal);
-		if(Math.abs(proj) < circle.radius)
-		   return Number.MIN_VALUE; // circle already collided
+		if(Math.abs(proj) <= circle.radius) // CHANGED < to <= IN CASE IT IS CURRENTLY COLLIDING
+		   return 0; // Return currently colliding
 		var r = wallNormal.mul(circle.radius);
 		//
 		// check if circle is approaching
@@ -113,7 +113,7 @@ function circleWallCollision(circle, wall, velocity) {
 		if(x1 > x2) {
 		   z = x1;
 		   x1 = x2;
-		   x2 = zy;
+		   x2 = z;
 		}
 		if(y1 > y2) {
 		   z = y1;
@@ -129,7 +129,7 @@ function circleWallCollision(circle, wall, velocity) {
 		var pointOfCollision = new Point(toPointOfCollision.x,toPointOfCollision.y);
 		var time = particleToLine(pointOfCollision, velocity, wall);
 		if ((pointOfCollision.x < x1 || pointOfCollision.x > x2) && (pointOfCollision.y < y1 || pointOfCollision.y > y2))
-		    return Number.POSITIVE_INFINITY;
+		    return -1 // MAKE SURE WE DON'T STOP CHECKING SEGMENTS PREMATURELY
 		return time;
 	 }
 	 

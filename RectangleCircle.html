@@ -55,10 +55,10 @@
 		
 		for (var i = 0; i < 4; ++i) // for each point
 		{
-			var thisSegment = new Line(recPoints[i],new Vec(recPoints[i], recPoints[(i + 1) % 4])); // create a line segment
+			thisSegment = new Line(recPoints[i],new Vec(recPoints[i], recPoints[(i + 1) % 4])); // create a line segment
 			if (t <= 0)
 			{
-				var thisTime = circleWallCollision(c, thisSegment, v); // find collision time between circle and line
+				var thisTime = circleSegmentCollision(c, thisSegment, recPoints[i], recPoints[(i + 1) % 4], v); // find collision time between circle and line
 				if (thisTime > t)
 					t = thisTime;
 			}
@@ -66,6 +66,9 @@
 				return t;
 		}
 
+		if (t == -1)
+			t = Number.POSITIVE_INFINITY;
+		
 		return t;
 	}
 
