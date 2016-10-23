@@ -50,16 +50,15 @@
 		var D = r.center.add(r.u.add(r.v.mul(-1)).mul(-1)); // Top left
 		D.tag = "D";
 		var recPoints = [A, B, C, D];
-		//var closest = findClosest(recPoints); // find the closest 
 
 		var t = -1;
 		
-		for (var i = 0; i < 4; ++i)
+		for (var i = 0; i < 4; ++i) // for each point
 		{
-			var thisSegment = new Line(recPoints[i],new Vec(recPoints[i], recPoints[(i + 1) % 4]));
+			var thisSegment = new Line(recPoints[i],new Vec(recPoints[i], recPoints[(i + 1) % 4])); // create a line segment
 			if (t <= 0)
 			{
-				var thisTime = circleWallCollision(c, thisSegment, v);
+				var thisTime = circleWallCollision(c, thisSegment, v); // find collision time between circle and line
 				if (thisTime > t)
 					t = thisTime;
 			}
@@ -71,7 +70,7 @@
 	}
 
 	var c = new Circle(new Point(0,0),1);
-	var r = new Rectangle(new Point(6.5,5),new vec2d(5, 0), new vec2d(0, 0));
+	var r = new Rectangle(new Point(0,5),new vec2d(5, 0), new vec2d(0, 0)); // SAME RECTANGLE AS ORIGINAL ASSIGNMENT USING NEW DEFINITION && CONSTRUCTOR
 	var v = new vec2d(0,1);
 	var t =  rectangleCircleCollisionTime(c,r,v);
 	

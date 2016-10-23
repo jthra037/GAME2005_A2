@@ -1,0 +1,24 @@
+<html>
+<head>
+<script src = "vector2d.js"></script>
+<script src = "geom2d.js"></script>
+<script src = "physics2d.js"></script>
+</head>
+<body>
+   <pre>
+     <script>
+      var p1 = new Point(0,0);
+	  var direction = new vec2d(1,0);
+	  
+	  var p = new Point(2,10);
+	  var v = new vec2d(2,-1);
+	  
+	  var line = new Line(p1,direction);
+	  
+	  var t = particleToLine(p, v, line);
+	  document.write(t);
+	 </script>
+   </pre>
+<body>
+
+</html>

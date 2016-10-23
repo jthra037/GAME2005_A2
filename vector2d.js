@@ -40,12 +40,12 @@ function angle(vec1, vec2) {
 	return Math.acos(dotprod(vec1,vec2)/m);
 }
 
-function mat2d(vec1,vec2) {
+function mat2d(a,b,c,d) {
 	this.mat = [[],[]];
-	this.mat[0].push(vec1.x);
-	this.mat[0].push(vec1.y);
-	this.mat[1].push(vec2.x);
-	this.mat[1].push(vec2.y);
+	this.mat[0].push(a);
+	this.mat[0].push(b);
+	this.mat[1].push(c);
+	this.mat[1].push(d);
 	this.det = function() {
 		return this.mat[0][0]*this.mat[1][1]-this.mat[1][0]*this.mat[0][1];
 	}
