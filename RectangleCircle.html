@@ -9,34 +9,29 @@
 <!-- Here put your pseudocode as a nicely formatted html text -->
 <h1> Pseudocode </h1>
 <ul>
-<li>Determine all 4 vertices of rectangle</li>
-<ul>
-<li>We have 2 points (A,B) and (C,D) which we know are along the rectangles diagonal.</li>
-<li>This means the other two points are (A,D) and (C,B). Store those.</li>
-</ul>
-<li>Using vertices determine if there will BE a collision</li>
-<ul>
-<li>Find the closest vertice to circles origin</li>
-<li>Using this shared vertice and the 2 adjoining vertices we construct 2 "walls"</li>
-<li>Find normal n for each</li>
-<li>Find a which is wal.startPoint - cir.pos for each</li>
-<li>Find c which is dotProduct(a, n)</li>
-<li>if abs(c) &lt cir.radius then we are already colliding</li>
-<li>if nearest vertice is moving away from circle, there will be no collision</li>
-<li>Find v which is dotProduct(displacement, n)</li>
-<li>if v > 0 there will be no collision</li>
-</ul>
-<li>Check collisions with relevant line segments using circleWallCollision</li>
-<ul>
-<li>Calculate the vector equation</li>
-<li>Find intersection time</li>
-<li>Return t</li>
-</ul>
-<li>If that somehow didn't work, check collisions with the vertices using circlePointCollision</li>
-<ul>
-<li>Use pointCircleCollision</li>
-</ul>
-<li>We should have collision time in the console at this point.</li>
+	<li>Determine all 4 vertices of rectangle</li>
+	<ul>
+		<li>Do this using the centre point and the 2 constituent vectors</li>
+	</ul>
+	<li>Check if there is a collision with each line segment</li>
+	<ul>
+		<li> For each point, create a line segment</li>
+		<li> See if the circle is going to collide with that line segment</li>
+		<ul>
+			<li> If it is not, check the next one
+			<li> If it is, let us know when
+		</ul>
+	</ul>
+	<li> If the circle did not collide with any line segment, check if it collided with one of the points</li>	
+	<ul>
+		<li> Check if the circle can collide with the point in question </li>
+		<ul>
+			<li> If it can't, move on to the next point </li>
+			<li> If it can, check when and let us know </li>
+		</ul>
+		<li> If didn't collide with any points either, it did not collide with the rectangle.
+	</ul>
+	<li> We should have collision time at this point, even if it is infinity.</li>
 </ul>
 <script>
 	function rectangleCircleCollisionTime(c, r, v)
