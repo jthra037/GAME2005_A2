@@ -1,0 +1,32 @@
+<html>
+<head>
+<script src = "vector2d.js"></script>
+<script src = "geom2d.js"></script>
+<script src = "physics2d.js"></script>
+</head>
+<body>
+   <pre>
+     <script>
+	 var wall = new Line(new Point(0,0), new vec2d(1,0));
+	 var circle = new Circle(new Point(2,12),1);
+	 var v = new vec2d(3,-4);
+	 var t = circleWallCollision(circle, wall, v);
+	 document.write(t);
+	 document.write("\n");
+	 p1 = new Point(5,0);
+	 p2 = new Point(6,0);
+	 var t = circleSegmentCollision(circle, wall, p1, p2, v);
+	 document.write(t);
+	  document.write("\n");
+	 p1 = new Point(-5,0);
+	 p2 = new Point(12,0);
+	 var t = circleSegmentCollision(circle, wall, p1, p2, v);
+	 document.write(t);
+	 //
+	 // in a similar fashion, consider the rectangle (0,0) (12,0) (0,1) (12,1).
+	 // check for collision with the above circle.
+	 </script>
+   </pre>
+<body>
+
+</html>

@@ -1,0 +1,88 @@
+<!-- Starter code for Assignment 2 -->
+<html>
+<head>
+<script src = "vector2d.js"></script>
+<script src = "geom2d.js"></script>
+<script src = "physics2d.js"></script>
+</head>
+<body>
+<!-- Here put your pseudocode as a nicely formatted html text -->
+<h1> Pseudocode </h1>
+<ul>
+	<li>Determine all 4 vertices of rectangle</li>
+	<ul>
+		<li>Do this using the centre point and the 2 constituent vectors</li>
+	</ul>
+	<li>Check if there is a collision with each line segment</li>
+	<ul>
+		<li> For each point, create a line segment</li>
+		<li> See if the circle is going to collide with that line segment</li>
+		<ul>
+			<li> If it is not, check the next one
+			<li> If it is, let us know when
+		</ul>
+	</ul>
+	<li> If the circle did not collide with any line segment, check if it collided with one of the points</li>	
+	<ul>
+		<li> Check if the circle can collide with the point in question </li>
+		<ul>
+			<li> If it can't, move on to the next point </li>
+			<li> If it can, check when and let us know </li>
+		</ul>
+		<li> If didn't collide with any points either, it did not collide with the rectangle.
+	</ul>
+	<li> We should have collision time at this point, even if it is infinity.</li>
+</ul>
+<script>
+	function rectangleCircleCollisionTime(c, r, v)
+	{
+		var A = r.center.add(r.u.add(r.v)); // Top right
+		A.tag = "A";
+		var B = r.center.add(r.u.add(r.v.mul(-1))); // Bottom right
+		B.tag = "B";
+		var C = r.center.add(r.u.add(r.v).mul(-1)); // Bottom left
+		C.tag = "C";
+		var D = r.center.add(r.u.add(r.v.mul(-1)).mul(-1)); // Top left
+		D.tag = "D";
+		var recPoints = [A, B, C, D];
+
+		var t = -1;
+		
+		for (var i = 0; i < 4; ++i) // for each point
+		{
+			thisSegment = new Line(recPoints[i],new Vec(recPoints[i], recPoints[(i + 1) % 4])); // create a line segment
+			if (t <= 0)
+			{
+				var thisTime = circleSegmentCollision(c, thisSegment, recPoints[i], recPoints[(i + 1) % 4], v); // find collision time between circle and line
+				if (thisTime > t)
+					t = thisTime;
+			}
+			else
+				return t;
+		}
+
+		if (t == -1)
+			t = Number.POSITIVE_INFINITY;
+		
+		return t;
+	}
+
+	var c = new Circle(new Point(0,0),1);
+	var r = new Rectangle(new Point(0,5),new vec2d(5, 0), new vec2d(0, 0)); // SAME RECTANGLE AS ORIGINAL ASSIGNMENT USING NEW DEFINITION && CONSTRUCTOR
+	var v = new vec2d(0,1);
+	var t =  rectangleCircleCollisionTime(c,r,v);
+	
+	document.write(t); <!-- Expected result is 4 -->
+	
+	var v = new vec2d(1,-1);
+	var t =  rectangleCircleCollisionTime(c,r,v);
+	
+	document.write(t); <!-- Expected result is Infinity -->
+	
+	var v = new vec2d(1,-1);
+	var t =  rectangleCircleCollisionTime(new Circle(new Point(0,0),5),r,v);
+	
+	document.write(t); <!-- Expected result is 0 -->
+</script>
+</body>
+</html>
